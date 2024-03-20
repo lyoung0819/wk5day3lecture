@@ -177,3 +177,10 @@ SELECT * FROM student;
 SELECT * FROM student s
 JOIN teacher t 
 ON s.teacher_id = t.teacher_id;
+
+SELECT s.first_name, s.last_name, t.first_name, t.last_name
+FROM student s
+JOIN teacher t
+ON s.teacher_id = t.teacher_id;
+
+-- 
