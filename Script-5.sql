@@ -116,3 +116,64 @@ SELECT *
 FROM customer c 
 LEFT JOIN receipt r
 ON c.customer_id = r.customer_id; 
+
+
+-- Right join - flip-flop right and left table:
+SELECT *
+FROM receipt r 
+RIGHT JOIN customer c
+ON c.customer_id = r.customer_id;
+
+-- JOIN.... ON comes after the SELECT... FROM and before WHERE 
+
+-- SELECT
+-- FROM
+-- JOIN
+-- ON
+-- WHERE
+-- GROUP BY
+-- HAVING
+-- ORDER BY
+-- LIMIT
+-- OFFSET
+
+SELECT customer_id, sum(amount)
+FROM receipt r 
+GROUP BY customer_id;
+
+SELECT r.customer_id, sum(amount)
+FROM receipt r 
+JOIN customer c 
+ON c.customer_id = r.customer_id
+GROUP BY r.customer_id;
+
+-- ALIASING TABLE NAMES - unambigous column names
+-- If tables have the same column names in both, you need to use aliases when joining so it knows which is which
+
+CREATE TABLE teacher(
+	teacher_id SERIAL PRIMARY KEY,
+	first_name VARCHAR,
+	last_name VARCHAR
+);
+
+CREATE TABLE student (
+	student_id SERIAL PRIMARY KEY,
+	first_name VARCHAR,
+	last_name VARCHAR,
+	teacher_id INTEGER NOT NULL,
+	FOREIGN KEY(teacher_id) REFERENCES teacher(teacher_id)
+);
+
+INSERT INTO teacher (first_name, last_name)
+VALUES ('Brian', 'Stanton'), ('Travis', 'Peck'), ('Kevin', 'Beier');
+
+INSERT INTO student (first_name, last_name, teacher_id)
+VALUES ('Jimmy', 'Smith', 1), ('Freddy', 'Franks', 2), ('Sally', 'Sallerson', 1), ('Ellie', 'McEllson', 2);
+
+SELECT * FROM teacher;
+
+SELECT * FROM student;
+
+SELECT * FROM student s
+JOIN teacher t 
+ON s.teacher_id = t.teacher_id;
